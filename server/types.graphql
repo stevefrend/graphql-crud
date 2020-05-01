@@ -1,0 +1,14 @@
+type User {
+  id: ID!
+  username: String!
+  todos: [Todo!]
+}
+
+type Todo {
+  title: String!
+  user: User!
+}
+
+type Query {
+  users: [User!]
+}
