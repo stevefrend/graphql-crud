@@ -25,4 +25,13 @@ const deleteTodoQuery = gql`
   }
 `;
 
-export { getTodosQuery, addTodoQuery, deleteTodoQuery };
+const updateTodoQuery = gql`
+  mutation($id: ID!, $title: String!) {
+    updateTodo(id: $id, title: $title) {
+      id
+      title
+    }
+  }
+`;
+
+export { getTodosQuery, addTodoQuery, deleteTodoQuery, updateTodoQuery };
