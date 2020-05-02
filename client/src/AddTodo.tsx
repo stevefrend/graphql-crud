@@ -1,15 +1,15 @@
 import React, { useRef } from 'react';
-import { graphql } from 'react-apollo';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { addTodoQuery, getTodosQuery } from './queries';
+import { addTodoQuery, getTodosQuery, searchTodosQuery } from './queries';
 
 const AddTodo = (): JSX.Element => {
   const [addTodo] = useMutation(addTodoQuery);
+  const [searchTodos, { data, loading }] = useMutation(searchTodosQuery);
   const { refetch } = useQuery(getTodosQuery);
-  const inputRef = useRef();
+  const inputRef = useRef('');
 
   return (
-    <div>
+    <div id='main-div'>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -21,7 +21,26 @@ const AddTodo = (): JSX.Element => {
         }}
       >
         <input type='text' ref={inputRef} />
+        {/* ADD */}
         <button type='submit'>Submit</button>
+
+        {/* SEARCH */}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            if (inputRef.current.value.length) {
+              searchTodos({ variables: { searchTerm: inputRef.current.value } });
+            }
+          }}
+        >
+          Search
+        </button>
+        <ul>
+          {data &&
+            data.searchTodos.map((el) => {
+              return <li>{el.title}</li>;
+            })}
+        </ul>
       </form>
     </div>
   );

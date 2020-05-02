@@ -8,13 +8,6 @@ export const resolvers = {
   Query: {
     todos: () => Todos.find({}),
     users: () => Users.find({}),
-    searchTodos: (parent, args) => {
-      return Todos.find({}).then((res) => {
-        return res.filter((todo) =>
-          todo.title.toLowerCase().includes(args.searchTerm.toLowerCase())
-        );
-      });
-    },
   },
   User: {
     todos: (parent, args) => {
@@ -44,6 +37,14 @@ export const resolvers = {
         { title: args.title },
         { useFindAndModify: false }
       ).then((result) => result);
+    },
+    searchTodos: (parent, args) => {
+      console.log(args);
+      return Todos.find({}).then((res) => {
+        return res.filter((todo) =>
+          todo.title.toLowerCase().includes(args.searchTerm.toLowerCase())
+        );
+      });
     },
   },
 };

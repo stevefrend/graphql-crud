@@ -34,4 +34,18 @@ const updateTodoQuery = gql`
   }
 `;
 
-export { getTodosQuery, addTodoQuery, deleteTodoQuery, updateTodoQuery };
+const searchTodosQuery = gql`
+  # query(searchTerm: String!) {
+  #   # searchTerm is what we are comparing in resolvers.ts : $searchTerm variable (args)
+  #   searchTodos(searchTerm: $searchTerm) {
+  #     title
+  #   }
+  # }
+  mutation($searchTerm: String!) {
+    searchTodos(searchTerm: $searchTerm) {
+      title
+    }
+  }
+`;
+
+export { getTodosQuery, addTodoQuery, deleteTodoQuery, updateTodoQuery, searchTodosQuery };
